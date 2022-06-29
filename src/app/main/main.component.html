@@ -13,6 +13,28 @@
             </thead>
             <tbody>
                 <tr *ngFor="let torrent of new_torrents">
+                    <td><a href="/torrent/{{torrent._id}}">{{torrent.getName()}}</a></td>
+                    <td>{{torrent.created_at}}</td>
+                    <td>{{torrent.size}}</td>
+                    <td>{{torrent.seeders}}</td>
+                    <td>{{torrent.leechers}}</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Age</th>
+                    <th>Taille</th>
+                    <th>S</th>
+                    <th>L</th>
+                    <th>C</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let torrent of best_torrents">
                     <td>{{torrent.name}}</td>
                     <td>{{torrent.created_at}}</td>
                     <td>{{torrent.size}}</td>

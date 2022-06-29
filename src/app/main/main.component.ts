@@ -10,6 +10,7 @@ import { TorrentService } from '../torrent/torrent.service';
 export class MainComponent implements OnInit {
 
   new_torrents: Torrent[] = [];
+  best_torrents: Torrent[] = [];
 
   constructor(private torrentService: TorrentService) { }
 
@@ -18,14 +19,24 @@ export class MainComponent implements OnInit {
    */
   async getNewTorrents(){
     let torrents = await this.torrentService.getLastTorrents();
-    torrents.forEach(torrent => {
-      this.new_torrents.push(torrent);
+    torrents.forEach((torrent: Torrent) => {
+      this.new_torrents.push(Object.assign(new Torrent, torrent));
     });
-    console.log(this.new_torrents);
+  }
+
+  /**
+   * 
+   */
+  async getBestTorrents(){
+    let torrents = await this.torrentService.getBestTorrents();
+    torrents.forEach((torrent: Torrent) => {
+      this.best_torrents.push(Object.assign(new Torrent, torrent));
+    });
   }
 
   ngOnInit(): void {
     this.getNewTorrents();
+    this.getBestTorrents();
   }
 
 }
