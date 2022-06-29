@@ -39,4 +39,9 @@ export class TorrentService {
         return torrents;
     }
 
+    async getTorrent(id: String): Promise<Torrent> {
+        let torrent = await this.http.get<Torrent>('http://127.0.0.1:3000/torrents/' + id, { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
+        return torrent!;
+    }
+
 }

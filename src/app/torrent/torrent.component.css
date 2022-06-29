@@ -1,0 +1,13 @@
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.margin-top{
+    margin-top: 20px;
+}
+.line {
+    background-color: white;
+    padding: 10px;
+}
+html { background-color: #f6f6f6; }

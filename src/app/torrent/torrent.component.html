@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <p class="center margin-top"><b>{{ torrent.name }}</b></p>
+        <div class="center">
+            <button class="btn btn-primary">Télécharger</button>
+            <button class="btn btn-warning">Favoris</button>
+        </div>
+        <p class="line margin-top">Uploader : <a href="/user/{{torrent.user.username}}">{{ torrent.user.username }}</a></p>
+        <p class="line">description : {{ torrent.description }}</p>
+        <p class="line">Hash : {{ torrent.hash }}</p>
+        <p class="line">Taille : {{ torrent.size }}</p>
+        <p class="line">Catégorie : {{ torrent.category }}</p>
+        <p class="line">Peers : {{ torrent.category }}</p>
+    </div>
+</div>
