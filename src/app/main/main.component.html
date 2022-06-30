@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let torrent of new_torrents">
-                    <td><a href="/torrent/{{torrent._id}}">{{torrent.getName()}}</a></td>
+                    <td><a href="/torrent/{{torrent._id}}">{{torrent.name}}</a></td>
                     <td>{{torrent.created_at}}</td>
                     <td>{{torrent.size}}</td>
                     <td>{{torrent.seeders}}</td>

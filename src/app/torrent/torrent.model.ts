@@ -1,4 +1,5 @@
 import { User } from "../user/user.model";
+import { Subcategory } from "../subcategory/subcategory.model";
 
 export class Torrent {
     id?: String;
@@ -8,15 +9,24 @@ export class Torrent {
     user!: User;
     description?: String;
     category?: String;
-    subcategory?: String;
+    subcategory!: Subcategory;
     mediainfo?: String;
     hash?: String;
-    size?: Number;
+    size?: number;
     seeders?: Number;
     leechers?: Number;
     created_at?: String;
 
-    getName(): string {
-        return `${this.name}`;
+    /**
+     * Reformat Torrent size from bytes to readable String 
+     * @returns {String}
+     */
+    sizeFormater() {
+        let units = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+        let l = 0, n = this.size || 0;
+        while (n >= 1024 && ++l) {
+            n = n / 1024;
+        }
+        return (n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + units[l]);
     }
 }

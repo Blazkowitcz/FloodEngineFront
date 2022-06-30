@@ -14,8 +14,26 @@ export class TorrentComponent implements OnInit {
 
     constructor(private torrentService: TorrentService, private route: ActivatedRoute) { }
 
+    /**
+     * Get Torrent informations
+     */
     async getTorrent(){
         this.torrent = Object.assign(new Torrent, await this.torrentService.getTorrent(this.route.snapshot.paramMap.get('id')||""));
+    }
+
+    /**
+     * Download Torrent file
+     * @param {String} id 
+     */
+    async download(id: String){
+        let file: any = await this.torrentService.download(id);
+        let filename = file.headers.get('Content-Disposition')?.split('filename')[1].split(';')[0]; 
+        let a = document.createElement('a');
+        let objectUrl = URL.createObjectURL(file.body);
+        a.href = objectUrl;
+        a.download = filename || 'unknow_name.torrent';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
     }
 
     ngOnInit(): void {
