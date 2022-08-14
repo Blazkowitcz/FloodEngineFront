@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Torrent } from './torrent.model';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import config from '../../../config.json';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TorrentService {
+
+    private base_url = "http://" + config.api_address + ':' + config.api_port;
 
     /**
      * Constructor
@@ -19,7 +22,7 @@ export class TorrentService {
      */
     async getLastTorrents(): Promise<Torrent[]>{
         let torrents: Torrent[] = [];
-        let data = await this.http.get<Torrent[]>('http://127.0.0.1:3000/torrents/news', { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
+        let data = await this.http.get<Torrent[]>(this.base_url + '/torrents/news', { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
         data!.forEach((torrent: Torrent) => {
             torrents.push(torrent);
         })
@@ -32,7 +35,7 @@ export class TorrentService {
      */
     async getBestTorrents(){
         let torrents: Torrent[] = [];
-        let data = await this.http.get<Torrent[]>('http://127.0.0.1:3000/torrents/best', { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
+        let data = await this.http.get<Torrent[]>(this.base_url +'/torrents/best', { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
         data!.forEach((torrent: Torrent) => {
             torrents.push(torrent);
         })
@@ -45,7 +48,7 @@ export class TorrentService {
      * @returns {Torrent}
      */
     async getTorrent(id: String): Promise<Torrent> {
-        let torrent = await this.http.get<Torrent>('http://127.0.0.1:3000/torrents/' + id, { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
+        let torrent = await this.http.get<Torrent>(this.base_url +'/torrents/' + id, { headers: {"token": localStorage.getItem('token') ||""}}).toPromise();
         return torrent!;
     }
 
@@ -55,7 +58,12 @@ export class TorrentService {
      * @returns {HttpResponse}
      */
     async download(id: String): Promise<any>{
-        return await this.http.get('http://127.0.0.1:3000/torrents/' + id + '/download', { headers: {'token': localStorage.getItem('token') ||""}, responseType: 'blob' as 'json', observe: 'response'}).toPromise();
+        return await this.http.get(this.base_url + '/torrents/' + id + '/download', { headers: {'token': localStorage.getItem('token') ||""}, responseType: 'blob' as 'json', observe: 'response'}).toPromise();
     }
 
+    async upload(file: any): Promise<any> {
+        let formData = new FormData();
+        formData.append("file", file, file.name);
+        return await this.http.post(this.base_url + '/torrents/', formData).toPromise();
+    }
 }
