@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import config from '../../../config.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private base_url = "http://127.0.0.1:3000";
+  private base_url = "http://" + config.api_address + ':' + config.api_port;
   constructor(private http: HttpClient) { }
 
   async login(username: String, password: String){
