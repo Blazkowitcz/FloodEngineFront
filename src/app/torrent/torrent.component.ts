@@ -27,7 +27,7 @@ export class TorrentComponent implements OnInit {
      */
     async download(id: String){
         let file: any = await this.torrentService.download(id);
-        let filename = file.headers.get('Content-Disposition')?.split('filename')[1].split(';')[0]; 
+        let filename: string = file.headers.get('Content-Disposition')?.split('filename')[1].split(';')[0].replace('=', '');
         let a = document.createElement('a');
         let objectUrl = URL.createObjectURL(file.body);
         a.href = objectUrl;
